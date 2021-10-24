@@ -18,13 +18,13 @@ pipeline {
         }
         stage('Code Build') {
             steps {
-                bat 'mvn clean install package'
+                sh'mvn clean install package'
             }
         }
         // stage('Code Quality'){
         //               steps{
         //                       withSonarQubeEnv('Sonar Qube Scanner'){  
-        //                       bat 'mvn sonar:sonar'
+        //                       sh 'mvn sonar:sonar'
                          
         //              }
         //         }
@@ -70,7 +70,7 @@ pipeline {
                                 
                                    stage('Docker Build Image') {
                                            steps{
-                                                       bat "docker build -t 7011907111/assignment4 ."      }
+                                                       sh "docker build -t 7011907111/assignment4 ."      }
                                                }
     
     
@@ -78,17 +78,17 @@ pipeline {
                                              steps{
           
                                                   withCredentials([string(credentialsId: 'dockerhub', variable: 'Docker_Bind')]) {
-                                                  bat "docker login -u 7011907111 -p ${Docker_Bind}"
+                                                  sh "docker login -u 7011907111 -p ${Docker_Bind}"
                                                      }
       
-                                                    bat "docker push 7011907111/assignment4"
+                                                    sh "docker push 7011907111/assignment4"
                                                  }
       
                                             }
 
                                 stage('Docker Run Container') {
                                            steps{
-                                                 bat "docker run -d -p 8088:8080 7011907111/assignment4"
+                                                 sh "docker run -d -p 8088:8080 7011907111/assignment4"
                                                }
                                        }
     } 
