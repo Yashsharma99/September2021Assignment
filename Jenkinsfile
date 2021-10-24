@@ -7,7 +7,7 @@ pipeline {
             
 //         tools {
 //         jdk 'JAVA'
-//         maven 'MAVEN-3'
+//         maven 'MAVEN3'
 //        // docker 'docker'
 //     }
     stages {
