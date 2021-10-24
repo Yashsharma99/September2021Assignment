@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Code Checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'gitlab', url: 'https://git.nagarro.com/freshertraining2021/yashsharma01.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/Yashsharma99/September2021Assignment.git']]])
             }
         }
         stage('Code Build') {
