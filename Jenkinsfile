@@ -5,11 +5,11 @@ pipeline {
     //          registryCredential = 'dockerhub'
     //          dockerImage = ''
             
-        tools {
-        jdk 'JAVA'
-        maven 'MAVEN-3'
-       // docker 'docker'
-    }
+//         tools {
+//         jdk 'JAVA'
+//         maven 'MAVEN-3'
+//        // docker 'docker'
+//     }
     stages {
         stage('Code Checkout') {
             steps {
