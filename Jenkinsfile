@@ -4,6 +4,7 @@ pipeline {
              imagename = "7011907111/assignment4"
              registryCredential = 'dockerhub'
              dockerImage = ''
+    }
             
           tools {
            jdk 'JAVA'
