@@ -5,11 +5,11 @@ pipeline {
     //          registryCredential = 'dockerhub'
     //          dockerImage = ''
             
-//         tools {
-//         jdk 'JAVA'
-//         maven 'MAVEN3'
+          tools {
+           jdk 'JAVA'
+           maven 'MAVEN3'
 //        // docker 'docker'
-//     }
+       }
     stages {
         stage('Code Checkout') {
             steps {
@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Code Build') {
             steps {
-                sh'mvn clean install package'
+               sh "mvn -Dmaven.test.failure.ignore=true clean package"
             }
         }
         // stage('Code Quality'){
@@ -86,11 +86,11 @@ pipeline {
       
                                             }
 
-                                stage('Docker Run Container') {
-                                           steps{
-                                                 sh "docker run -d -p 8088:8080 7011907111/assignment4"
-                                               }
-                                       }
+//                                 stage('Docker Run Container') {
+//                                            steps{
+//                                                  sh "docker run -d -p 8088:8080 7011907111/assignment4"
+//                                                }
+//                                        }
     } 
 }
 
