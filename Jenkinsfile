@@ -41,7 +41,7 @@ pipeline {
     }
     stage('Docker  run'){
       steps{
-         sh 'docker run -d --name springcon -p 8090:8080 springjen:ver1'
+         sh 'docker run -d --name mycont -p 8091:8080 7011907111/assign4 '
         }
      }
       
