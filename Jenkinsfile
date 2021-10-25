@@ -22,7 +22,7 @@ pipeline {
       }
     }
     
-    tage('Deploy Image') {
+    stage('Deploy Image') {
       steps{
         script {
           docker.withRegistry( '', registryCredential ) {
