@@ -1,9 +1,9 @@
 pipeline {
-//   environment {
-//     imagename = "7011907111/assign4"
-//     registryCredential = 'dockerhub'
-//     dockerImage = ''
-//   }
+  environment {
+    imagename = "7011907111/assign4"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+  }
   agent any
   stages {
     stage('Cloning Git') {
@@ -13,23 +13,37 @@ pipeline {
 
       }
     }
-    stage('Docker create Image')
-{
+  
+     stage('Building image') {
       steps{
-               sh 'docker build -t springjen:ver1 .'
-             }
-         }
-stage('Pre Container check')
-   {
-         steps{
-           sh 'if [ "$(docker ps -q -f name=springcon)" ] && [ "$(docker port springcon 8080)" ]; then docker stop springcon && docker rm springcon; fi'
-                }
+        script {
+          dockerImage = docker.build imagename
         }
-            stage('Docker Deploy')
-       {
-           steps{
-                  sh 'docker run -d --name springcon -p 8090:8080 springjen:ver1'
-                   }
-           }
+      }
+    }
+    
+    tage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push("$BUILD_NUMBER")
+             dockerImage.push('latest')
+            }
+        }
+      }
+    }
+    stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $imagename:$BUILD_NUMBER"
+         sh "docker rmi $imagename:latest"
+
+      }
+    }
+    stage('Docker  run'){
+      steps{
+         sh 'docker run -d --name springcon -p 8090:8080 springjen:ver1'
+        }
+     }
+      
   }
 }
