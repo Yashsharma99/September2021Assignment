@@ -1,14 +1,14 @@
 pipeline {
     agent any
-    // environment {
-    //          imagename = "7011907111/assignment4"
-    //          registryCredential = 'dockerhub'
-    //          dockerImage = ''
+    environment {
+             imagename = "7011907111/assignment4"
+             registryCredential = 'dockerhub'
+             dockerImage = ''
             
           tools {
            jdk 'JAVA'
            maven 'MAVEN3'
-           docker 'docker'
+           //docker 'docker'
        }
     stages {
         stage('Code Checkout') {
@@ -68,35 +68,31 @@ pipeline {
                                 //                             }
                                 //                      }
                                 
-//                                    stage('Docker Build Image') {
-//                                            steps{
-//                                                        sh "docker build -t 7011907111/assignment4 ."      }
-//                                                }
+                                   stage('Docker Build Image') {
+                                           steps{
+                                                script {
+                                                        dockerImage = docker.build imagename
+                                                }
+                                                     //  sh "docker build -t 7011907111/assignment4 ."      
+                                           }
+                                               }
     
     
-//                                   stage('Docker Push Image') {
-//                                              steps{
-          
-//                                                   withCredentials([string(credentialsId: 'dockerhub', variable: 'Docker_Bind')]) {
-//                                                   sh "docker login -u 7011907111 -p ${Docker_Bind}"
-//                                                      }
-      
-//                                                     sh "docker push 7011907111/assignment4"
-//                                                  }
-      
-//                                             }
+                                  stage('Docker Push Image') {
+                                             steps{
+                                                            script {
+                                                              docker.withRegistry( '', registryCredential ) {
+                                                              dockerImage.push("$BUILD_NUMBER")
+                                                               dockerImage.push('latest')
 
-//                                 stage('Docker Run Container') {
-//                                            steps{
-//                                                  sh "docker run -d -p 8088:8080 7011907111/assignment4"
-//                                                }
-//                                        }
-                                  stage('Docker create Image')
-                                               {
-                                                 steps{
-                                                       sh 'docker build -t 7011907111/assignmnet4:ver1 .'
-                                                                }
                                                                            }
+                                                                                }
+                                                 }
+      
+                                            }
+
+                                
+                            
     } 
 }
 
