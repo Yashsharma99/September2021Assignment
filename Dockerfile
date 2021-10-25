@@ -1,5 +1,5 @@
 FROM tomcat:latest 
 LABEL maintainer=”yash-sharma”
-COPY target/September2021Assignment.war  /usr/local/tomcat/webapps/
+COPY target/September2021Assignment.war   $CATALINA_HOME/webapps/
 EXPOSE 8080
-CMD [“catalina.sh”, “run”]
+CMD $CATALINA_HOME/bin/catalina.sh run && tail -f /opt/tomcat/logs/catalina.out
