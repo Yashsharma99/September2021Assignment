@@ -9,6 +9,7 @@ pipeline {
     stage('Cloning Git') {
       steps {
         git([url: 'https://github.com/Yashsharma99/September2021Assignment.git', branch: 'main', credentialsId: 'github'])
+        echo "success"
 
       }
     }
