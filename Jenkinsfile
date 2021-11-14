@@ -1,9 +1,9 @@
 pipeline {
-  environment {
-    imagename = "7011907111/assign4"
-    registryCredential = 'dockerhub'
-    dockerImage = ''
-  }
+//   environment {
+//     imagename = "7011907111/assign4"
+//     registryCredential = 'dockerhub'
+//     dockerImage = ''
+//   }
   agent any
   stages {
     stage('Cloning Git') {
@@ -13,16 +13,7 @@ pipeline {
 
       }
     }
-    pipeline {
-    agent any
-  stages {
-    stage('Cloning Git') {
-      steps {
-        git([url: 'https://github.com/Yashsharma99/September2021Assignment.git', branch: 'main', credentialsId: 'github'])
-        echo "success"
-
-      }
-    }
+    
     stage('amazon-ecs'){
         steps {
             script{
@@ -39,8 +30,7 @@ pipeline {
         }
      }
    
-    }
-  }
+   
   
 //      stage('Building image') {
 //       steps{
