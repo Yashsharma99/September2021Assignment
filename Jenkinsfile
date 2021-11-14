@@ -26,7 +26,7 @@ pipeline {
     }
     stage('Docker  run'){
       steps{
-         sh 'docker run -d --name assignment:latest 711885951967.dkr.ecr.ap-south-1.amazonaws.com/assignment:latest" -p 8091:8080  '
+         sh 'docker run -d --name assignment:latest 711885951967.dkr.ecr.ap-south-1.amazonaws.com/assignment:latest" -p 8091:8080'
         }
      }
    
