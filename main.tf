@@ -4,9 +4,9 @@ provider "aws" {
 }
 
 #Create security group with firewall rules
-resource "aws_security_group" "my_security_group" {
+resource "aws_security_group" "my_securitygroup" {
   vpc_id = "vpc-9ea0aef6"
-  name        = "my_security_group"
+  name        = "my_securitygroup"
   description = "security group for Ec2 instance"
 
   ingress {
@@ -32,7 +32,7 @@ resource "aws_security_group" "my_security_group" {
   }
 
   tags= {
-    Name = "my_security_group"
+    Name = "my_securitygroup"
   }
 }
 
@@ -41,7 +41,7 @@ resource "aws_instance" "myFirstInstance" {
   ami           = "ami-0108d6a82a783b352"
   key_name = "myos2"
   instance_type = "t2.micro"
-  security_groups= ["my_security_group"]
+  security_groups= ["my_securitygroup"]
   tags= {
          Environment = "Prod"
          Project     = "Fresher Training"  
