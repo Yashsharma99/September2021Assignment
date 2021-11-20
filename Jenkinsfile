@@ -23,7 +23,7 @@
             steps {
                     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'ECR', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                         bat 'terraform init'
-                        bat 'terraform apply -auto-approve'
+                        bat 'terraform destroy -auto-approve'
                     }
                
            }
