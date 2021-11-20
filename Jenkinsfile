@@ -1,4 +1,4 @@
-pipeline {
+ pipeline {
 //   environment {
 //     imagename = "7011907111/assign4"
 //     registryCredential = 'dockerhub'
