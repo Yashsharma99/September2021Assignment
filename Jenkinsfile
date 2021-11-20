@@ -21,8 +21,9 @@
         
         stage ("terraform Action") {
             steps {
-                echo "Terraform action is --> ${action}"
-                bat ('terraform ${action} --auto-approve') 
+                //  withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'ECR', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+
+                         bat 'terraform apply -auto-approve'
            }
         }
 //     stage('amazon-ecs'){
