@@ -14,21 +14,21 @@ pipeline {
       }
     }
     
-    stage('amazon-ecs'){
-        steps {
-            script{
-                sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 711885951967.dkr.ecr.ap-south-1.amazonaws.com"
-                sh "docker build -t assignment ."
-                sh "docker tag assignment:latest 711885951967.dkr.ecr.ap-south-1.amazonaws.com/assignment:latest"
-                sh "docker push 711885951967.dkr.ecr.ap-south-1.amazonaws.com/assignment:latest"
-            }
-        }
-    }
-    stage('Docker  run'){
-      steps{
-         sh 'docker run -d --name assignment:latest 711885951967.dkr.ecr.ap-south-1.amazonaws.com/assignment:latest" -p 8091:8080'
-        }
-     }
+//     stage('amazon-ecs'){
+//         steps {
+//             script{
+//                 sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 711885951967.dkr.ecr.ap-south-1.amazonaws.com"
+//                 sh "docker build -t assignment ."
+//                 sh "docker tag assignment:latest 711885951967.dkr.ecr.ap-south-1.amazonaws.com/assignment:latest"
+//                 sh "docker push 711885951967.dkr.ecr.ap-south-1.amazonaws.com/assignment:latest"
+//             }
+//         }
+//     }
+//     stage('Docker  run'){
+//       steps{
+//          sh 'docker run -d --name assignment:latest 711885951967.dkr.ecr.ap-south-1.amazonaws.com/assignment:latest" -p 8091:8080'
+//         }
+//      }
    
    
   
