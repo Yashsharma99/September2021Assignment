@@ -36,7 +36,7 @@
           label 'ubuntu'
        }
         steps{
-            unstash 'source'
+          //  unstash 'source'
             sh 'docker build -t 7011907111/assign4:latest .'
         }
        }
