@@ -58,7 +58,31 @@
    
    
    
-   
+   stage('image ecr aws'){
+       agent {
+          label 'ubuntu'
+       }
+        steps{
+               sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 876724398547.dkr.ecr.ap-south-1.amazonaws.com"
+               sh "docker build -t myassignment6 ."
+               sh "docker tag myassignment6:latest 876724398547.dkr.ecr.ap-south-1.amazonaws.com/myassignment6:latest"
+               sh "docker push 876724398547.dkr.ecr.ap-south-1.amazonaws.com/myassignment6:latest"           
+          }
+        }
+   stage('Ec2-deploy'){
+       agent {
+               label 'ubuntu'
+           }
+          steps{
+                   sshagent(['ec2cred']) {
+                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@ec2-3-110-123-63.ap-south-1.compute.amazonaws.com "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 876724398547.dkr.ecr.ap-south-1.amazonaws.com"'
+                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@ec2-3-110-123-63.ap-south-1.compute.amazonaws.com "sudo docker pull 876724398547.dkr.ecr.ap-south-1.amazonaws.com/myassignment6:latest"'
+                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@ec2-3-110-123-63.ap-south-1.compute.amazonaws.com "sudo docker run -d --name ECRassignment7 -p 8092:8080 876724398547.dkr.ecr.ap-south-1.amazonaws.com/myassignment6:latest "'
+       
+               }
+     
+             }   
+   }
    
    
    
