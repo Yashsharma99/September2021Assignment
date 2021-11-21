@@ -39,7 +39,7 @@ resource "aws_security_group" "my_securitygroup" {
 # Create AWS ec2 instance
 resource "aws_instance" "myFirstInstance" {
   ami           = "ami-0108d6a82a783b352"
-  key_name = "myos2"
+  key_name = "myos1"
   instance_type = "t2.micro"
   security_groups= ["my_securitygroup"]
   tags= {
