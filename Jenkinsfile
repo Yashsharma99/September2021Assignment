@@ -13,39 +13,65 @@
 
       }
     }
-     stage ("terraform init") {
-            steps {
-                bat ('terraform init') 
-            }
-        }
-        
-        stage ("terraform Action") {
-            steps {
-                    withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'ECR', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                        bat 'terraform init'
-                        bat 'terraform destroy -auto-approve'
-                    }
-               
-           }
-        }
-//     stage('amazon-ecs'){
-//         steps {
-//             script{
-//                 sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 711885951967.dkr.ecr.ap-south-1.amazonaws.com"
-//                 sh "docker build -t assignment ."
-//                 sh "docker tag assignment:latest 711885951967.dkr.ecr.ap-south-1.amazonaws.com/assignment:latest"
-//                 sh "docker push 711885951967.dkr.ecr.ap-south-1.amazonaws.com/assignment:latest"
+//      stage ("terraform init") {
+//             steps {
+//                 bat ('terraform init') 
 //             }
 //         }
-//     }
-//     stage('Docker  run'){
-//       steps{
-//          sh 'docker run -d --name assignment:latest 711885951967.dkr.ecr.ap-south-1.amazonaws.com/assignment:latest" -p 8091:8080'
-//         }
-//      }
+        
+//         stage ("terraform Action") {
+//             steps {
+//                     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'ECR', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+//                         bat 'terraform init'
+//                         bat 'terraform destroy -auto-approve'
+//                     }
+               
+//            }
+//         }   
+   
+ 
+   
+   stage('Build docker image'){
+       agent {
+          label 'ubuntu'
+       }
+        steps{
+            unstash 'source'
+            sh 'docker build -t 7011907111/assign4:latest .'
+        }
+       }
+         stage('Push docker image'){
+            agent {
+           label 'ubuntu'
+              }
+              steps{
+                    withCredentials([string(credentialsId: 'dockerhub', variable: 'dockercred')]) {
+                   sh "docker login -u 7011907111 -p ${dockercred}"
+             }
+                  sh 'docker push 7011907111/assign4:latest'
+          }
+      }
    
    
-  
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
 //      stage('Building image') {
 //       steps{
 //         script {
