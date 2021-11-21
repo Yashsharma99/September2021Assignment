@@ -1,9 +1,9 @@
  pipeline {
-//   environment {
-//     imagename = "7011907111/assign4"
-//     registryCredential = 'dockerhub'
-//     dockerImage = ''
-//   }
+  environment {
+    imagename = "7011907111/assign4"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+  }
   agent any
   stages {
     stage('Cloning Git') {
@@ -37,7 +37,9 @@
        }
         steps{
           //  unstash 'source'
-            sh 'docker build -t 7011907111/assign4:latest .'
+              script {
+              dockerImage = docker.build imagename
+          }
         }
        }
          stage('Push docker image'){
@@ -45,10 +47,12 @@
            label 'ubuntu'
               }
               steps{
-                    withCredentials([string(credentialsId: 'dockerhub', variable: 'dockercred')]) {
-                   sh "docker login -u 7011907111 -p ${dockercred}"
-             }
-                  sh 'docker push 7011907111/assign4:latest'
+                    script {
+                        docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push("$BUILD_NUMBER")
+                         dockerImage.push('latest')
+            }
+        }
           }
       }
    
