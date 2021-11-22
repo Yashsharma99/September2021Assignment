@@ -70,23 +70,31 @@
                sh "docker push 876724398547.dkr.ecr.ap-south-1.amazonaws.com/myassignment6:latest"           
           }
         }
-   stage('Ec2-deploy'){
-       agent {
-               label 'ubuntu'
-           }
-          steps{
-                   sshagent(['ec2cred']) {
+//    stage('Ec2-deploy'){
+//        agent {
+//                label 'ubuntu'
+//            }
+//           steps{
+//                    sshagent(['ec2cred']) {
                    
-                    sh 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 876724398547.dkr.ecr.ap-south-1.amazonaws.com'
-                    sh 'docker pull 876724398547.dkr.ecr.ap-south-1.amazonaws.com/myassignment6:latest'
-                    sh 'docker run -d --name ECRASSIGN7 -p 8092:8080 876724398547.dkr.ecr.ap-south-1.amazonaws.com/myassignment6:latest'
+//                     sh 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 876724398547.dkr.ecr.ap-south-1.amazonaws.com'
+//                     sh 'docker pull 876724398547.dkr.ecr.ap-south-1.amazonaws.com/myassignment6:latest'
+//                     sh 'docker run -d --name ECRASSIGN7 -p 8092:8080 876724398547.dkr.ecr.ap-south-1.amazonaws.com/myassignment6:latest'
        
-               }
+//                }
      
-             }   
-   }
+//              }   
+//    }
    
-   
+   stage('Container Deploy on EC2') {
+            steps {
+                withCredentials([sshUserPrivateKey(credentialsId: 'ec2cred', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+                    remote.user = userName
+                    remote.identityFile = identity
+                    sshCommand remote : remote, command: 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 876724398547.dkr.ecr.ap-south-1.amazonaws.com'
+                    sshCommand remote : remote, command: 'sudo docker pull 876724398547.dkr.ecr.ap-south-1.amazonaws.com/myassignment6:latest'
+                    sshCommand remote : remote, command: 'sudo docker run -d --name ECRASSIGN7 -p 8092:8080 876724398547.dkr.ecr.ap-south-1.amazonaws.com/myassignment6:latest' }
+} }
    
    
    
