@@ -22,8 +22,9 @@
 //         stage ("terraform Action") {
 //             steps {
 //                     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'ECR', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-//                         bat 'terraform init'
-//                         bat 'terraform destroy -auto-approve'
+//                         echo "Terraform action is --> ${action}"
+//                         bat "terraform ${action} --auto-approve"
+//                     
 //                     }
                
 //            }
