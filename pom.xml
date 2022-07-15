@@ -19,12 +19,7 @@
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 	</properties>
-	<properties>
-            <!-- Optional URL to server. Default value is http://localhost:9000 -->
-            <sonar.host.url>
-              https://sonarqube-yash-test.cloudops.aa.st/projects
-            </sonar.host.url>
-        </properties>
+	
 
 	<dependencies>
 		<dependency>
