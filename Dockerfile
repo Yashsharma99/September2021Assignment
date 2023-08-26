@@ -1,4 +1,4 @@
-FROM tomcat:10.1.5-jdk11 
+FROM tomcat:10.1.12-jdk11 
 LABEL maintainer=”yash-sharma”
 COPY target/September2021Assignment.war   $CATALINA_HOME/webapps/
 EXPOSE 8080
